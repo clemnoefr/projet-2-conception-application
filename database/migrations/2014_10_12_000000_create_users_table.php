@@ -19,8 +19,8 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('humidite_direct');
-            $table->string('temp_direct');
+            $table->string('humidite_direct')->nullable();
+            $table->string('temp_direct')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
