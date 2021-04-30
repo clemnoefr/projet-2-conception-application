@@ -38,7 +38,7 @@ echo "
 			}else{
 				echo"
 				<a href='connexion.php' class='button_infos'>
-					Tabbleau de bord
+					Tableau de bord
 				</a>";
 			}
 			if ($_SESSION["login"] == "true"){

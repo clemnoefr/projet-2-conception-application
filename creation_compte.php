@@ -1,6 +1,7 @@
 <?php header('Content-type: text/html; charset=UTF-8');
 
 include ('includes/header.php');
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -11,18 +12,18 @@ $login = 1;
 
 if(isset($_POST['nom'])){
 	$mdp = "";
-    $sql = "SELECT login FROM users WHERE login = '".addslashes($_POST['login'])."'" ;
+    $sql = "SELECT * FROM users WHERE mail = '".addslashes($_POST['mailrecup'])."'" ;
     if (is_array($bdd->query($sql))){
 		foreach  ($bdd->query($sql) as $row) {
     }
     }
-	if(!isset($row['login'])){
+	if(!isset($row['nom'])){
 		$login = 0;
 	}
-	if( strlen($_POST['nom']) == 0){
+	if( empty($_POST['nom'])){
 		$login = 13;
 	}
-	if( strlen($_POST['prenom']) == 0){
+	if( empty($_POST['prenom'])){
 		$login = 14;
 	}
 	if(empty($_POST['mailrecup'])){
@@ -31,23 +32,11 @@ if(isset($_POST['nom'])){
 	if( empty($_POST['mdp']) ){
 		$login = 4;
 	}
-	if( empty($_POST['login'])){
-		$login = 3;
-	}
-	if(strlen($_POST['login']) >= 20){
-		$login = 5;
-	}
 	if( strlen($_POST['mdp']) > 30){
 		$login = 6;
 	}
 	if( strlen($_POST['mdp']) < 7){
 		$login = 7;
-	}
-	if( strlen($_POST['login']) < 5){
-		$login = 8;
-    }
-    if( strlen($_POST['entreprise']) == 0){
-		$login = 11;
 	}
 	if( !isset($_POST['conditions'])){
 		$login = 9;
@@ -55,19 +44,24 @@ if(isset($_POST['nom'])){
 	if( $_POST['mdp'] != $_POST['mdp2'] ){
 		$login = 2;
 	}
+	$sql2 = "SELECT numero_serie_station FROM stations WHERE numero_serie_station = '".addslashes($_POST['stations'])."'" ;
+	if(empty($bdd->query($sql2))){
+		$login = 15;
+	}
+	
 }
 // req nouveau pré-compte
-if(isset($_POST['login']) && $login == 0 && isset($_POST['conditions'])){
-	$sql = "INSERT INTO `users` (`login`, `mdp`, `mailrecup`, `nom`, `prenom`, `entreprise`, `validation`) VALUES ('".addslashes($_POST['login'])."', '".addslashes($_POST['mdp'])."', '".addslashes($_POST['mailrecup'])."', '".addslashes($_POST['nom'])."', '".addslashes($_POST['prenom'])."', '".addslashes($_POST['entreprise'])."', '0')";
+if(isset($_POST['mailrecup']) && $login == 0 && isset($_POST['conditions'])){
+	$sql = "INSERT INTO `users` (`mdp`, `mailrecup`, `nom`, `prenom`, `stations`, `validation`) VALUES ('".addslashes($_POST['mdp'])."', '".addslashes($_POST['mailrecup'])."', '".addslashes($_POST['nom'])."', '".addslashes($_POST['prenom'])."', '".addslashes($_POST['stations'])."', '0')";
 	$bdd->exec($sql);
 	$email = $_POST['mailrecup'];
     $headers = "From: Animation <admin@gleam-session.com>\r\n".
 		   "MIME-Version: 1.0" . "\r\n" .
            "Content-type: text/html; charset=UTF-8" . "\r\n";
-	$message = "Cliquer sur le bouton <a href='https://www.gleam-session.com/animation/confirm_mail.php?login=".$_POST['login']."> valider</a> pour confirmer votre adresse mail sur le site Animation.
+	$message = "Cliquer sur le bouton <a href='localhost/meteoV2/confirm_mail.php?mail=".$_POST['mailrecup']."> valider</a> pour confirmer votre adresse mail sur le site sur le site meteo.
 
 	\n\n";
-	mail($email, '[Animation] - Confirmation Mail', $message, $headers);
+	mail($email, '[Station Meteo] - Confirmation Mail', $message, $headers);
 
 
 	echo "
@@ -96,7 +90,7 @@ echo "	<div class='bloc_central_inscription'>
 			<br/><input type='text' name='mailrecup' placeholder='Mail' class='input_login_page crea_mail'/><br/>
 			<br/><input type='password' name='mdp'  placeholder='Mot de passe' class='input_login_page crea_mdp1'/><br/>
 			<br/><input type='password' name='mdp2'  placeholder='Confirmer le mot de passe' class='input_login_page crea_mdp2'/><br/>
-			<br/><input type='text' name='stations'  placeholder='Numero de Serie de la stations' class='input_login_page crea_stations'/><br/>
+			<br/><input type='text' name='stations'  placeholder='Numero de Serie de la station' class='input_login_page crea_stations'/><br/>
 			<br/><input type='text' name='adresse' placeholder='Adresse' class='input_login_page crea_adresse'/><br/>
 			<br/><input type='text' name='ville' placeholder='Ville' class='input_login_page crea_ville'/><br/>
 			<br/><input type='text' name='codepostal' placeholder='Code Postal' class='input_login_page crea_codepostal'/><br/>
@@ -113,9 +107,9 @@ echo "	<div class='bloc_central_inscription'>
 			if($login == 8 && isset($_POST['login'])){echo "<br/><br/><div class='error'>Votre login doit faire au moins 5 caractères</div>";}
 			if($login == 9 && isset($_POST['login'])){echo "<br/><br/><div class='error'>Veuillez accepter les conditions générales d'utilisation</div>";}
             if($login == 10 && isset($_POST['login'])){echo "<br/><br/><div class='error'>Veuillez renseigner une adresse mail pour récupérer votre mot de passe</div>";}
-            if($login == 11 && isset($_POST['login'])){echo "<br/><br/><div class='error'>L'entreprise ne peut pas être vide</div>";}
 			if($login == 13 && isset($_POST['login'])){echo "<br/><br/><div class='error'>Vous devez renseigner votre Nom</div>";}
 			if($login == 14 && isset($_POST['login'])){echo "<br/><br/><div class='error'>Vous devez renseigner votre Prenom</div>";}
+			if($login == 15 && isset($_POST['login'])){echo "<br/><br/><div class='error'>Ce numero de serie n'existe pas</div>";}
 			
 echo "
 			<div class='autre'>

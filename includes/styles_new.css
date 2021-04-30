@@ -164,14 +164,11 @@ input[type=checkbox]{
 }
 .bloc_temp_humi{
 	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-	width: 65%;
+	width: calc(71% - 90px);
 	height: 400px;
 	padding: 15px;
 	font-size: 20px;
-	top: 2%;
-	left: 1%;
-	right: 1%;
-	margin-left: 10px;
+	margin-left: 1%;
 }
 .bloc_graph_jour{
 	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
@@ -192,19 +189,20 @@ input[type=checkbox]{
 	margin: 11px;
 }
 .bloc_temp{
-	width: 300px;
-	height: 150px;
-	padding: 15px;
-	font-size: 20px;
+	width: 100px;
+	height: 80px;
 	text-align: center;
+	font-size: 70px;
+	margin-top: 170px;
+	margin-left: 10%;
 }
 .bloc_humi{
-	width: 300px;
-	height: 150px;
-	padding: 15px;
-	font-size: 20px;
-	margin-left: 320px;
-	text-align: center;
+	width: 100px;
+    height: 80px;
+    font-size: 70px;
+    margin-left: 70%;
+    text-align: center;
+    margin-top: -76px;
 }
 .bloc_meteo{
 	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
@@ -239,14 +237,14 @@ input[type=checkbox]{
 .temp_title{
 	position: absolute;
 	font-size: 25px;
-	margin-left: 157px;
-	margin-top: 20px;
+	margin-left: 6%;
+	margin-top: 60px;
 }
 .humi_title{
 	position: absolute;
 	font-size: 25px;
-	margin-top: -160px;
-	right: 45%;
+	margin-top: -190px;
+	right: calc(48% - 45px);
 }
 .title_graph{
 	font-size: 27px;

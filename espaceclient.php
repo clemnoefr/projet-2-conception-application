@@ -27,55 +27,46 @@ foreach  ($bdd->query($sql2) as $row2) {
     $temp = '';
     $humi = '';
 
-	if(isset($row['temperature'])){
-		$temp = $row['temperature'];
+	if(isset($row2['temperature'])){
+		$temp = $row2['temperature'].'°';
+
     }
-    if(isset($row['humiditer'])){
-		$humi = $row['humiditer'];
+    if(isset($row2['humidite'])){
+		$humi = $row2['humidite'];
     }
 }
 	echo "	
-        <div class='flex'>
-            <div class='bloc_temp_humi'>
-                <div class='title_temp_humi'>Capteur Température et Humidité</div>
-                <div class='bloc_temp'>
-                    <div class='temp_title'>
-                        Température
-                    </div>
-                    <div class='circle'>
-                        <div class='temp'>
-                            $temp
-                        </div>
-                    </div>
-                </div>
-                <div class='bloc_humi'>
-                    <div class='humi_title'>
-                        Humiditer
-                    </div>
-                    <div class='circle' style='right:37%'>
-                        <div class='humi'>
-                            $humi
-                        </div>
-                    </div>
-                </div>
+        <div class='bloc_temp_humi'>
+            <div class='title_temp_humi'>Capteur Température et Humidité</div>
+            <div class='temp_title'>
+                Température
             </div>
-            <div class='bloc_meteo'>
-                <div class='meteo_title'>Météo Actuel</div>
-                <a href='modif_adresse.php' class='adresse'>
-		    		$adresse
-                </a>
+            <div class='bloc_temp'>
+                $temp
             </div>
+            <div class='humi_title'>
+                humidité
+            </div>
+            <div class='bloc_humi'>
+                $humi%
+            </div>
+        </div>
+        <div class='bloc_meteo'>
+            <div class='meteo_title'>Météo Actuel</div>
+            <a href='modif_adresse.php' class='adresse'>
+				$adresse
+            </a>
         </div>
         <div class='bloc_graph_jour'>
             <div class='title_graph'>
-                Relevé des Température et d'humiditer pendant la journée
+                Relevé des Température et d'humidité pendant la journée
             </div>
             <canvas id='myChart' width='400' height='400'></canvas>
             <script src='js/jour_graph.js'></script>
         </div>
         <div class='bloc_graph_semaine'>
             <div class='title_graph'>
-                Relevé des Température et d'humiditer de la semaine
+                Relevé des Température et d'humidité de la semaine
             </div>
             <canvas id='myChart2' width='400' height='400'></canvas>
             <script src='js/semaine_graph.js'></script>
