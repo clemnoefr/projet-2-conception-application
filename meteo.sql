@@ -10,7 +10,7 @@
 CREATE TABLE users(
         id_user   Int  Auto_increment  NOT NULL ,
         nom       Varchar (255) NOT NULL ,
-        Prenom    Varchar (255) NOT NULL ,
+        prenom    Varchar (255) NOT NULL ,
         mail      Varchar (255) NOT NULL ,
         mdp       Varchar (255) NOT NULL ,
         telephone Int NOT NULL ,
@@ -49,14 +49,15 @@ CREATE TABLE capteurs(
 
 
 #------------------------------------------------------------
-# Table: relevés
+# Table: relevÃ©s
 #------------------------------------------------------------
 
 CREATE TABLE releves(
         id_releve            Int  Auto_increment  NOT NULL ,
         temperature          Int NOT NULL ,
         humidite             Int NOT NULL ,
-        date                 Int NOT NULL ,
+        date                 Varchar (30) NOT NULL ,
+        heure                Varchar (50) NOT NULL ,
         numero_serie_capteur Varchar (255) NOT NULL
 	,CONSTRAINT releves_PK PRIMARY KEY (id_releve)
 
