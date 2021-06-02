@@ -17,7 +17,6 @@ def add_user():
         _telephone = _json['telephone']
         _adresse = _json['adresse']
         # validate the received values
-        print("toto")
         if _prenom and _mail and _mdp and _telephone and _adresse and _nom and request.method == 'POST':
             # do not save password as a plain text
             _hashed_password = generate_password_hash(_mdp)
@@ -440,7 +439,7 @@ def releve_capteur(id):
     try:
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-        cursor.execute("SELECT * FROM releves WHERE numero_serie_capteur=%s", id)
+        cursor.execute("SELECT * FROM releves INNER JOIN capteurs ON releves.numero_serie_capteur = capteurs.numero_serie_capteur INNER JOIN stations ON capteurs.numero_serie_station = stations.numero_serie_station    WHERE stations.id_user = %s", id)
         row = cursor.fetchall()
         resp = jsonify(row)
         resp.status_code = 200
