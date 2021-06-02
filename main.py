@@ -235,11 +235,12 @@ def update_station():
         _date_achat = _json['date_achat']
         _modele = _json['modele']
         _id_user = _json['id_user']
+
         # validate the received values
         if _numero_serie_station and _date_achat and _modele and _id_user and request.method == 'POST':
             # save edits
-            sql = "UPDATE stations SET numero_serie_station=%s, date_achat=%s, modele=%s WHERE id_user=%s"
-            data = (_numero_serie_station, _date_achat, _modele, _id_user,)
+            sql = "UPDATE stations SET date_achat=%s, modele=%s, id_user=%s WHERE numero_serie_station=%s"
+            data = (_date_achat, _modele, _id_user, _numero_serie_station,)
             conn = mysql.connect()
             cursor = conn.cursor()
             cursor.execute(sql, data)
